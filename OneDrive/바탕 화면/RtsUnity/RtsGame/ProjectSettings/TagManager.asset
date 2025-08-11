@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - unit
+  - master
+  - worker
+  - wood
   layers:
   - Default
   - TransparentFX
@@ -41,4 +44,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Unit
+    uniqueID: 3014644523
+    locked: 0
+  - name: Obstacle
+    uniqueID: 1239106753
+    locked: 0
+  - name: particle
+    uniqueID: 3599071533
     locked: 0
