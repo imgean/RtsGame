@@ -42,6 +42,7 @@ public class worker : MonoBehaviour
     }
     public void StopHarvestCoroutine() // 자원 채취 코루틴 중지 함수
     {
+        Debug.Log("자원 채취 코루틴 중지");
         // 🔧 이전 코루틴 종료  
         if (currentHarvestCoroutine != null)
         {
@@ -59,19 +60,16 @@ public class worker : MonoBehaviour
         Animator animator = GetComponent<Animator>();
         while (true)
         {
-            if (Vector3.Distance(transform.position, harvestPosition) < 2.5f)
+            if (Vector3.Distance(transform.position, harvestPosition) < 1.5f)
             {
 
                 unit.isMoving = false;
-                animator.SetBool("isLeft", false);
-                animator.SetBool("isDown", false);
-                animator.SetBool("isBack", false);
+                unit.resetAnimationBool(); // 애니메이션 초기화
                 animator.SetBool("isSmash", true);
-                yield return new WaitForSeconds(1f / harvestSpeed); // 채취 속도에 따라 대기
+                yield return new WaitForSeconds(1 / harvestSpeed); // 채취 속도에 따라 대기
                 GameManager.instance.AddResource(thing); // 자원 추가 함수 호출
-                
-                Instantiate(smashParticle, harvestPosition, Quaternion.identity); // 파티클 생성
                 Debug.Log(string.Format("{0}을(를) 채취했습니다.", thing));
+                Instantiate(smashParticle, harvestPosition, Quaternion.identity); // 파티클 생성
             }
             else
             {

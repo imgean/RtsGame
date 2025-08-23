@@ -19,7 +19,9 @@ public class GameManager : MonoBehaviour
     private Vector2 dragStartPos;
     private Vector2 dragEndPos;
     private bool isDragging = false;
-    private float dragThreshold = 0.1f; // 드래그와 클릭 구분 거리
+    [SerializeField]
+    private float dragThreshold = 0.5f; // 드래그와 클릭 구분 거리
+
 
     void Awake()
     {
@@ -29,7 +31,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        slectedUnit = new Unit[10];
+        slectedUnit = new Unit[100];
     }
 
     public void AddResource(string thing)
@@ -134,11 +136,6 @@ public class GameManager : MonoBehaviour
                 AddToSelectedUnits(unit);
             }
         }
-        else
-        {
-            // 빈 곳 클릭 시 선택 해제
-            DeselectAll();
-        }
     }
 
     void DragSelect()
@@ -161,13 +158,20 @@ public class GameManager : MonoBehaviour
 
     void AddToSelectedUnits(Unit unit)
     {
-        for (int i = 0; i < slectedUnit.Length; i++)
+        if ((unit.teamID == 0 || unit.teamID == 1))
         {
-            if (slectedUnit[i] == null)
+            for (int i = 0; i < slectedUnit.Length; i++)
             {
-                slectedUnit[i] = unit;
-                break;
+                if (slectedUnit[i] == null)
+                {
+                    slectedUnit[i] = unit;
+                    break;
+                }
             }
+        }
+        else 
+        {
+            Debug.LogWarning("적 유닛은 선택할 수 없습니다.");
         }
     }
 
